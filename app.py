@@ -20,6 +20,21 @@ client = MongoClient(connection_string)
 db = client[database_name]
 collection = db[collection_name]
 
+# Get all data
+@app.route('/session/all', methods=["GET"])
+def get_sessions():
+    try:
+        data = list(collection.find())
+        json_data = []
+
+        for document in data:
+            document["_id"] = str(document["_id"])
+            json_data.append(document)
+
+        return jsonify(json_data)
+    except Exception as e:
+        return f"Error retrieving data: {str(e)}"
+
 # Health Check endpoint
 @app.route('/', methods=["GET"])
 def check_health():
