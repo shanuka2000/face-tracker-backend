@@ -20,6 +20,19 @@ client = MongoClient(connection_string)
 db = client[database_name]
 collection = db[collection_name]
 
+# Get one item
+@app.route("/session/one", methods=["GET"])
+def get_one_session():
+    try:
+        session_id = request.args.get("sessionId")
+        query = {"sessionId": session_id}
+        data = collection.find_one(query)
+        data["_id"] = str(data["_id"])
+
+        return jsonify(data)
+    except Exception as e:
+        return f"Error retrieving data: {str(e)}"
+
 # Get all data
 @app.route('/session/all', methods=["GET"])
 def get_sessions():
