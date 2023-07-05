@@ -20,6 +20,16 @@ client = MongoClient(connection_string)
 db = client[database_name]
 collection = db[collection_name]
 
+# Save session data endpoint
+@app.route('/session/save', methods=["POST"])
+def save_session():
+    try:
+        data = request.get_json()
+        collection.insert_one(data)
+        return "Data saved Successfully"
+    except Exception as e:
+        return f"Error saving data: {str(e)}"
+
 # Get one item
 @app.route("/session/one", methods=["GET"])
 def get_one_session():
