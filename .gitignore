@@ -1,1 +1,4 @@
 /venv/*
+/static/*
+face_feature_model.h5
+generator_model.h5
